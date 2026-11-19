@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#183c35">
+    <meta name="description" content="Find your next car with Ride Sasa. Browse cars for sale across Kenya and connect directly with sellers.">
+    <meta name="google-adsense-account" content="">
+    <title>Ride Sasa — Find your next car</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+    <script src="ads.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#" aria-label="Ride Sasa home">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/ridesasa-logo-transparent.png" alt=""></span>
+          <span>ride<span class="brand-accent">sasa</span></span>
+        </a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+        <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#listings">Browse cars</a>
+          <a class="nav-link" href="#how-it-works">How it works</a>
+          <a class="nav-link" href="#ride-sasa">Our story</a>
+          <button class="button button-outline nav-saved" type="button" data-action="show-saved">Saved <span class="saved-count" id="saved-count">0</span></button>
+          <a class="nav-link" href="dealer.html#login">Dealer sign in</a>
+          <a class="button button-dark nav-sell" href="dealer.html#signup">List your units <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-pattern" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> Your next drive starts here</p>
+            <h1>Find a car that<br><span>takes you places.</span></h1>
+            <p class="hero-description">Explore handpicked cars from sellers across Kenya. Compare your options and talk to the seller directly.</p>
+            <div class="hero-proof">
+              <div class="proof-avatars" aria-hidden="true"><span>JM</span><span>AK</span><span>NW</span></div>
+              <p><strong>Made for Kenyan roads</strong><br>Find the right ride, at your pace.</p>
+            </div>
+          </div>
+          <div class="hero-photo">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1100&q=85" alt="A dark sedan ready for a drive">
+            <div class="photo-caption"><span class="caption-icon" aria-hidden="true">↗</span><span><strong>Good cars. Good journeys.</strong><small>Explore cars picked for every kind of drive.</small></span></div>
+            <span class="photo-sticker">LET'S<br>GO</span>
+          </div>
+        </div>
+        <form class="search-panel" id="quick-search">
+          <label class="search-field search-keyword">
+            <span class="field-icon" aria-hidden="true">⌕</span>
+            <span class="field-copy"><span class="field-label">What are you looking for?</span><input id="search-query" type="search" placeholder="Try Toyota, SUV, Nairobi..."></span>
+          </label>
+          <label class="search-field">
+            <span class="field-icon" aria-hidden="true">⌖</span>
+            <span class="field-copy"><span class="field-label">Location</span><input id="search-location" type="search" placeholder="All Kenya"></span>
+          </label>
+          <label class="search-field">
+            <span class="field-icon" aria-hidden="true">KSh</span>
+            <span class="field-copy"><span class="field-label">Max price</span><select id="search-price"><option value="">Any price</option><option value="1000000">Under 1M</option><option value="2000000">Under 2M</option><option value="3500000">Under 3.5M</option><option value="5000000">Under 5M</option><option value="8000000">Under 8M</option></select></span>
+          </label>
+          <button class="button button-coral search-button" type="submit">Find a car <span aria-hidden="true">→</span></button>
+        </form>
+      </section>
+
+      <section class="listings-section page-width" id="listings">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow eyebrow-dark">THE DRIVE STARTS HERE</p>
+            <h2>Cars worth a closer look<span class="heading-period">.</span></h2>
+            <p class="section-subtitle">A little browsing today, a new adventure tomorrow.</p>
+          </div>
+          <button class="button button-outline mobile-filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel" data-action="toggle-filters"><span aria-hidden="true">☷</span> Filters</button>
+        </div>
+
+        <div class="results-toolbar">
+          <p id="results-summary" aria-live="polite">Loading listings...</p>
+          <label class="sort-control">Sort by
+            <select id="sort-order" aria-label="Sort listings">
+              <option value="recommended">Recommended</option>
+              <option value="price-low">Price: low to high</option>
+              <option value="price-high">Price: high to low</option>
+              <option value="year-new">Newest year</option>
+              <option value="mileage-low">Lowest mileage</option>
+            </select>
+          </label>
+        </div>
+        <aside class="ad-slot" data-adsense-slot="REPLACE_WITH_TOP_AD_SLOT_ID" aria-label="Advertisement" hidden></aside>
+        <p class="inventory-notice" id="inventory-notice" role="status" hidden></p>
+
+        <div class="catalog-layout">
+          <aside class="filter-panel" id="filter-panel" aria-label="Filter cars">
+            <div class="filter-heading"><h3>Refine your search</h3><button class="text-button" type="button" data-action="clear-filters">Clear all</button></div>
+            <label class="filter-label" for="filter-make">Make or model</label>
+            <input id="filter-make" type="search" placeholder="e.g. Toyota, Harrier">
+            <label class="filter-label" for="filter-dealer">Dealer</label>
+            <input id="filter-dealer" type="search" placeholder="Search dealer name">
+            <label class="filter-label" for="filter-body">Body type</label>
+            <select id="filter-body"><option value="">Any body type</option><option>SUV</option><option>Sedan</option><option>Hatchback</option><option>Wagon</option><option>Pickup</option><option>Van</option><option>Coupe</option><option>Other</option></select>
+            <div class="filter-row">
+              <div><label class="filter-label" for="filter-year">Year from</label><select id="filter-year"><option value="">Any year</option><option value="2015">2015</option><option value="2017">2017</option><option value="2019">2019</option><option value="2021">2021</option><option value="2023">2023</option></select></div>
+              <div><label class="filter-label" for="filter-transmission">Transmission</label><select id="filter-transmission"><option value="">Any</option><option>Automatic</option><option>Manual</option><option>Other</option></select></div>
+            </div>
+            <label class="filter-label" for="filter-location">Location</label>
+            <input id="filter-location" type="search" placeholder="Any town or county">
+            <label class="filter-label" for="filter-max-price">Maximum price</label>
+            <select id="filter-max-price"><option value="">Any budget</option><option value="1000000">KSh 1,000,000</option><option value="2000000">KSh 2,000,000</option><option value="3500000">KSh 3,500,000</option><option value="5000000">KSh 5,000,000</option><option value="8000000">KSh 8,000,000</option></select>
+            <div class="filter-note"><span aria-hidden="true">✦</span> Find something you love? Save it to compare later.</div>
+          </aside>
+          <div class="listing-grid" id="listing-grid" aria-live="polite"></div>
+        </div>
+        <div class="catalog-pagination">
+          <button class="button button-outline" id="load-more-listings" type="button" hidden>Load more cars</button>
+        </div>
+        <aside class="ad-slot" data-adsense-slot="REPLACE_WITH_CATALOG_AD_SLOT_ID" aria-label="Advertisement" hidden></aside>
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-illustration" aria-hidden="true">⌕</span>
+          <h3>No cars match those filters yet</h3>
+          <p>Try a different search or clear some filters to see more rides.</p>
+          <button class="button button-dark" type="button" data-action="clear-filters">Clear filters</button>
+        </div>
+      </section>
+
+      <section class="how-section" id="how-it-works">
+        <div class="page-width how-inner">
+          <div><p class="eyebrow eyebrow-dark">SIMPLE FROM START TO DRIVE</p><h2>Finding your ride<br>should feel easy<span class="heading-period">.</span></h2></div>
+          <div class="steps">
+            <article class="step"><span class="step-number">01</span><div><h3>Explore your options</h3><p>Search listings and narrow them down to what works for you.</p></div></article>
+            <article class="step"><span class="step-number">02</span><div><h3>Compare the details</h3><p>Check out the specs, price, location and seller information.</p></div></article>
+            <article class="step"><span class="step-number">03</span><div><h3>Talk to the seller</h3><p>Reach out directly to ask questions and arrange a viewing.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="brand-film-section page-width" id="ride-sasa">
+        <div class="brand-film">
+          <div class="brand-film-copy">
+            <p class="eyebrow">RIDE NOW. RIDE SASA.</p>
+            <h2>Kenyan roads.<br>Your next story.</h2>
+            <p>Discover vehicles from local dealers, compare your options and connect directly. Listing a vehicle is free, with no expiry or unit limit.</p>
+            <a class="button button-light" href="dealer.html#signup">List your units for free <span aria-hidden="true">→</span></a>
+          </div>
+          <figure class="brand-film-visual">
+            <video controls playsinline preload="metadata" poster="assets/ridesasa-logo.png" aria-label="Ride Sasa animated logo">
+              <source src="assets/ridesasa-logo.mp4" type="video/mp4">
+              Your browser does not support embedded video.
+            </video>
+            <figcaption>Ride now. Ride Sasa.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="sell-banner page-width">
+        <div><p class="eyebrow">FOR KENYAN DEALERS</p><h2>Bring your stock to more buyers.</h2><p>Create a dealer account and publish unlimited vehicle listings for free.</p><a class="button button-light" href="dealer.html#signup">Create a free dealer account <span aria-hidden="true">→</span></a></div>
+        <div class="sell-art" aria-hidden="true"><span class="art-sun"></span><span class="art-road"></span><span class="art-car">▰</span></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true"><img src="assets/ridesasa-logo-transparent.png" alt=""></span><span>ride<span class="brand-accent">sasa</span></span></a>
+        <p>Find your next drive, your way.</p>
+        <small>© 2026 Ride Sasa · Verify listing details before making a purchase.</small>
+      </div>
+    </footer>
+
+    <dialog class="listing-dialog" id="listing-dialog" aria-label="Car details"><div id="dialog-content"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

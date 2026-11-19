@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#183c35">
+    <meta name="description" content="Ride Sasa administrator dashboard.">
+    <title>Platform admin — Ride Sasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="admin.js" defer></script>
+  </head>
+  <body class="dealer-page admin-page">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="Ride Sasa home">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/ridesasa-logo-transparent.png" alt=""></span>
+          <span>ride<span class="brand-accent">sasa</span></span>
+        </a>
+        <nav class="dealer-nav" aria-label="Administrator navigation">
+          <a class="nav-link" href="index.html">Return to marketplace</a>
+          <button class="button button-outline" id="admin-logout" type="button" hidden>Sign out</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="dealer-main page-width">
+      <section class="dealer-intro">
+        <p class="eyebrow eyebrow-dark">RIDE SASA PLATFORM</p>
+        <h1>Administrator access<span>.</span></h1>
+        <p>Sign in with the authorized Google account to view dealer and marketplace activity.</p>
+      </section>
+
+      <p class="portal-message" id="admin-message" role="status" hidden></p>
+
+      <section class="portal-card admin-login-card" id="admin-login">
+        <p class="eyebrow eyebrow-dark">SECURE ADMIN SIGN-IN</p>
+        <h2>Continue with Google</h2>
+        <p>Administrator access is limited to the configured owner email and must use Google sign-in.</p>
+        <a class="button button-google" href="/api/auth/google/start?next=admin.html"><span class="google-mark" aria-hidden="true">G</span>Sign in with Google</a>
+        <a class="admin-back-link" href="dealer.html#login">Dealer sign-in</a>
+      </section>
+
+      <section class="admin-dashboard" id="admin-dashboard" hidden>
+        <div class="admin-heading">
+          <div><p class="eyebrow eyebrow-dark">PLATFORM OVERVIEW</p><h2>Welcome, <span id="admin-name">admin</span></h2><p id="admin-email"></p></div>
+          <a class="button button-dark" href="dealer.html">Dealer portal <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="admin-stats">
+          <article class="summary-card"><span>Dealer accounts</span><strong id="admin-dealer-count">0</strong><small>Dealer accounts on Ride Sasa</small></article>
+          <article class="summary-card"><span>Published units</span><strong id="admin-listing-count">0</strong><small>Visible in the public marketplace</small></article>
+        </div>
+        <section class="portal-card admin-table-card">
+          <div class="portal-section-heading">
+            <div><p class="eyebrow eyebrow-dark">DEALER DIRECTORY</p><h2>Dealer accounts</h2></div>
+            <span class="inventory-limit">Latest 100 accounts</span>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Business</th><th>Email</th><th>Units</th><th>Joined</th></tr></thead>
+              <tbody id="admin-dealer-rows"></tbody>
+            </table>
+          </div>
+          <p class="admin-empty" id="admin-empty" hidden>No dealer accounts yet.</p>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><img src="assets/ridesasa-logo-transparent.png" alt=""></span><span>ride<span class="brand-accent">sasa</span></span></a>
+        <p>Platform administration</p>
+        <small>Administrator data is available only to the authorized Google account.</small>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#183c35">
+    <meta name="description" content="Create a Ride Sasa dealer account, sign in with Google and manually manage vehicle listings.">
+    <title>Dealer portal — Ride Sasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="dealer.js" defer></script>
+  </head>
+  <body class="dealer-page">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="Ride Sasa home">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/ridesasa-logo-transparent.png" alt=""></span>
+          <span>ride<span class="brand-accent">sasa</span></span>
+        </a>
+        <nav class="dealer-nav" aria-label="Dealer navigation">
+          <a class="nav-link" href="index.html">Browse cars</a>
+          <a class="button button-dark" href="index.html#listings">View marketplace <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="dealer-main page-width">
+      <section class="dealer-intro">
+        <p class="eyebrow eyebrow-dark">RIDE SASA DEALER PORTAL</p>
+        <h1>Put your stock in the spotlight<span>.</span></h1>
+        <p>Manage unlimited vehicle listings and reach buyers across Kenya. Every listing is free.</p>
+      </section>
+
+      <p class="portal-message" id="portal-message" role="status" hidden></p>
+
+      <section class="portal-card auth-card" id="auth-card" aria-labelledby="auth-title">
+        <div class="auth-heading">
+          <div>
+            <p class="eyebrow eyebrow-dark">DEALER ACCOUNT</p>
+            <h2 id="auth-title">Sign in to your account</h2>
+          </div>
+          <span class="portal-lock" aria-hidden="true">↗</span>
+        </div>
+        <div class="auth-switch" role="group" aria-label="Choose account action">
+          <button type="button" class="auth-switch-button active" data-auth-view="login" aria-pressed="true">Sign in</button>
+          <button type="button" class="auth-switch-button" data-auth-view="signup" aria-pressed="false">Create account</button>
+        </div>
+        <a class="button button-google" href="/api/auth/google/start?next=dealer.html"><span class="google-mark" aria-hidden="true">G</span>Continue with Google</a>
+        <p class="auth-divider"><span>or continue with email</span></p>
+        <form class="portal-form" id="login-form">
+          <label>Email address<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required maxlength="128"></label>
+          <button class="button button-dark portal-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+        <form class="portal-form" id="signup-form" hidden>
+          <label>Dealer or business name<input name="name" autocomplete="organization" required maxlength="100"></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+          <label>Phone number<input name="phone" type="tel" autocomplete="tel" required maxlength="30" placeholder="+254 7XX XXX XXX"></label>
+          <label>Password <span class="field-help">Use at least 12 characters.</span><input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="128"></label>
+          <label class="phone-consent"><input name="showPhone" type="checkbox" value="true"> Show this business phone number on my public listings so buyers can contact me.</label>
+          <button class="button button-dark portal-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
+          <p class="terms-note">No listing fees, subscriptions or expiry dates. Publish as many vehicles as you need.</p>
+        </form>
+        <a class="admin-signin-link" href="admin.html">Platform administrator? Sign in with Google</a>
+      </section>
+
+      <section class="dealer-dashboard" id="dealer-dashboard" hidden>
+        <aside class="dealer-sidebar" aria-label="Dealer account">
+          <p class="sidebar-title">DEALER WORKSPACE</p>
+          <a class="sidebar-link active" href="#analytics"><span aria-hidden="true">◫</span> Analytics</a>
+          <a class="sidebar-link" href="#inventory"><span aria-hidden="true">▤</span> Stock</a>
+          <a class="sidebar-link" href="#plan-summary"><span aria-hidden="true">◷</span> Free listings</a>
+          <a class="sidebar-link" href="#dealer-profile"><span aria-hidden="true">⚙</span> Account settings</a>
+          <a class="sidebar-market-link" href="index.html">Return to marketplace <span aria-hidden="true">↗</span></a>
+        </aside>
+        <div class="dealer-dashboard-main">
+        <div class="dashboard-heading" id="analytics">
+          <div>
+            <p class="eyebrow eyebrow-dark">YOUR DEALER ACCOUNT</p>
+            <h2>Welcome, <span id="dealer-name">dealer</span></h2>
+            <p class="dashboard-email" id="dealer-email"></p>
+          </div>
+          <div class="dashboard-actions">
+            <a class="button button-coral" href="#add-car">Add a car <span aria-hidden="true">+</span></a>
+            <button class="button button-outline" id="logout-button" type="button">Sign out</button>
+          </div>
+        </div>
+
+        <div class="dashboard-summary" id="plan-summary">
+          <article class="summary-card"><span>Listing fees</span><strong id="plan-status">Free</strong><small id="plan-detail">No listing fees or expiry dates</small></article>
+          <article class="summary-card"><span>Active units</span><strong id="listing-count">0</strong><small id="listing-capacity">Unlimited active listings</small></article>
+          <article class="summary-card"><span>Your listings</span><strong>Unlimited</strong><small>Publish and manage at no cost</small></article>
+        </div>
+
+        <section class="portal-card profile-card" id="dealer-profile">
+          <div class="portal-section-heading">
+            <div><p class="eyebrow eyebrow-dark">ACCOUNT SETTINGS</p><h2>Dealer profile</h2></div>
+          </div>
+          <p class="form-help">Manage the contact details buyers see. Your account email is <strong id="profile-email"></strong>.</p>
+          <form class="portal-form profile-form" id="profile-form">
+            <label>Business or dealer name<input name="name" required maxlength="100"></label>
+            <label>Phone number<input name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="+254 7XX XXX XXX"></label>
+            <label class="phone-consent profile-consent"><input name="showPhone" type="checkbox" value="true"> Show this phone number on my public listings.</label>
+            <button class="button button-dark portal-submit" type="submit">Save profile</button>
+          </form>
+        </section>
+
+        <section class="dashboard-columns">
+          <section class="portal-card listing-editor" id="add-car">
+            <div class="portal-section-heading">
+              <div><p class="eyebrow eyebrow-dark">VEHICLE DETAILS</p><h2 id="listing-form-title">Add a unit</h2></div>
+              <span class="required-note">* Required</span>
+            </div>
+            <p class="form-help" id="listing-form-help">Add complete, accurate details so buyers can compare your unit.</p>
+            <form class="portal-form vehicle-form" id="listing-form">
+              <label>Make *<input name="make" required maxlength="60" placeholder="Toyota"></label>
+              <label>Model *<input name="model" required maxlength="80" placeholder="Harrier"></label>
+              <label>Year *<input name="year" type="number" min="1950" required></label>
+              <label>Price (KSh) *<input name="priceKes" type="number" min="1" step="1" required></label>
+              <label>Mileage (km) *<input name="mileageKm" type="number" min="0" step="1" required></label>
+              <label>Engine (cc)<input name="engineCc" type="number" min="1" step="1"></label>
+              <label>Fuel *<select name="fuel" required><option value="">Select</option><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option><option>Other</option></select></label>
+              <label>Transmission *<select name="transmission" required><option value="">Select</option><option>Automatic</option><option>Manual</option><option>Other</option></select></label>
+              <label>Body type *<select name="body" required><option value="">Select</option><option>SUV</option><option>Sedan</option><option>Hatchback</option><option>Wagon</option><option>Pickup</option><option>Van</option><option>Coupe</option><option>Other</option></select></label>
+              <label>Condition *<select name="condition" required><option value="">Select</option><option>Used</option><option>New</option><option>Foreign used</option><option>Locally used</option></select></label>
+              <label>Location / county *<input name="location" required maxlength="60" placeholder="Nairobi"></label>
+              <label class="form-span">Photo URLs <span class="field-help">HTTPS URLs, one per line (up to 8).</span><textarea name="imageUrls" rows="3" placeholder="https://..."></textarea></label>
+              <label class="form-span">Description<textarea name="description" rows="4" maxlength="2000" placeholder="Share service history, features and viewing details."></textarea></label>
+              <div class="form-span form-actions">
+                <button class="button button-dark" id="save-listing-button" type="submit">Publish unit <span aria-hidden="true">→</span></button>
+                <button class="button button-outline" id="cancel-edit-button" type="button" hidden>Cancel edit</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="portal-card inventory-card" id="inventory">
+            <div class="portal-section-heading">
+              <div><p class="eyebrow eyebrow-dark">YOUR INVENTORY</p><h2>Your units</h2></div>
+              <span class="inventory-limit">Unlimited active listings</span>
+            </div>
+            <div class="dealer-listings" id="dealer-listings" aria-live="polite"></div>
+            <p class="empty-inventory" id="empty-inventory">You haven't added any units yet.</p>
+            <button class="button button-outline dealer-load-more" id="load-older-listings" type="button" hidden>Load older listings</button>
+          </section>
+        </section>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><img src="assets/ridesasa-logo-transparent.png" alt=""></span><span>ride<span class="brand-accent">sasa</span></span></a>
+        <p>Dealer tools, built for Kenyan roads.</p>
+        <small>© 2026 Ride Sasa · Verify listing details before publishing.</small>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
